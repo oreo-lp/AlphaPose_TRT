@@ -5,15 +5,20 @@
 * Cython
 * PyTorch 1.8.1
 * torchvision 0.9.1
-* numpy 1.17.4 (numpy版本过高会出报错 [this issue](https://github.com/MVIG-SJTU/AlphaPose/issues/777)
-* python-package setuptools >= 40.0， reported by [this issue](https://github.com/MVIG-SJTU/AlphaPose/issues/838)
+* numpy 1.17.4 (numpy版本过高会出报错 [this issue](https://github.com/MVIG-SJTU/AlphaPose/issues/777) )
+* python-package setuptools >= 40.0, reported by [this issue](https://github.com/MVIG-SJTU/AlphaPose/issues/838)
 
 ## 2. Results
 [AlphaPose](https://github.com/MVIG-SJTU/AlphaPose/blob/master/docs/MODEL_ZOO.md) 存在多个目标检测+姿态估计模型的组合，
-本项目(fork from [AlphaPose](https://github.com/MVIG-SJTU/AlphaPose) )仅对[YOLOv3_SPP](https://raw.githubusercontent.com/AlexeyAB/darknet/master/cfg/yolov3-spp.cfg) + [Fast Pose](https://github.com/MVIG-SJTU/AlphaPose/blob/master/configs/coco/resnet/256x192_res50_lr1e-3_1x.yaml)
-进行加速。AlphaPose在数据预处理部分使用YOLOv3-SPP模型检测出一幅图像中的多个人物，然后将这些人物图像送入到FastPose模型中进行姿态估计。
+本仓库(fork from [AlphaPose](https://github.com/MVIG-SJTU/AlphaPose) )仅对[YOLOv3_SPP](https://raw.githubusercontent.com/AlexeyAB/darknet/master/cfg/yolov3-spp.cfg) + [Fast Pose](https://github.com/MVIG-SJTU/AlphaPose/blob/master/configs/coco/resnet/256x192_res50_lr1e-3_1x.yaml)
+进行加速。
+<div align="center">
+    <img src="docs/2.jpg" , width="400" alt><br>
+    <b><a>AlphaPose_trt inference rst</a></b>
+</div>
+AlphaPose在数据预处理部分使用YOLOv3-SPP模型检测出一幅图像中的多个人物，然后将这些人物图像送入到FastPose模型中进行姿态估计。
 我们对YOLOv3_SPP模型以及FastPose模型都进行了加速， 并记录了加速前后的mAP值 (COCO val 2017， Tesla T4)。 其中ground truth box表示FastPose模型
-的检测精度， detection boxes表示YOLOv_SPP + FastPose模型的检测结果。
+的检测精度， detection boxes表示YOLOv_SPP + FastPose模型的检测精度。
 <center>
 
 | Method | ground truth box mAP@0.6 | detection boxes mAP@0.6 | 
@@ -26,15 +31,17 @@
 
 ### 2.1 YOLOv3-SPP speed up
 下表记录了YOLOv3_SPP模型在不同batch size下的推理时间以及吞吐量，并计算了加速比(第三列以及第四列)。
+
+吞吐量Throughput = 1000 / latency * batchsize
 <center>
 
-| model | Batchsize | Latency (ms) | Throughput  | Latency Speedup |Throughput speedup|
+| model | Batchsize | Latency (s) | Throughput  | Latency Speedup |Throughput speedup|
 |:-------|:-----:|:-------:|:-----:|:-------:|:-------:|
 | YOLOv3-SPP | 1 | 0.0541 | 18484.29 |  |  |
 |  | 2 | 0.0939 | 21299.25 |  |  |
 |  | 4 | 0.1726 | 23174.97 |  |  |
 |  | 8 | 0.3228 | 24783.15 |  |  |
-| **YOLOv3-SPP_trt** | 1*| 0.0201 | 49751.24 | **2.7x** | **2.7x** |
+| **YOLOv3-SPP_trt** | 1 | 0.0201 | 49751.24 | **2.7x** | **2.7x** |
 |  | 2 | 0.0337 | 59347.18 | **2.8x** | **2.8x** |
 |  | 4 | 0.0605 | 66115.70 | **2.9x** | **2.9x** |
 |  | 8 | 0.1155 | 69264.07 | **2.8x** | **2.8x** |
@@ -43,10 +50,10 @@
 </center>
 
 ### 2.2 Fast Pose speed up
-下面的表格列举了YOLOv3-SPP模型的加速比信息：
+下表记录了Fast Pose模型在不同batch size下的推理时间以及吞吐量，并计算了加速比(第三列以及第四列)。
 <center>
 
-| model | Batchsize | Latency (ms) | Throughput  | Latency Speedup |Throughput speedup|
+| model | Batchsize | Latency (s) | Throughput  | Latency Speedup |Throughput speedup|
 |:-------|:-----:|:-------:|:-----:|:-------:|:-------:|
 | AlphaPose | 1 | 0.0239 | 41841.00 |  |  |
 |  | 2 | 0.0246 | 81300.81 |  |  |
@@ -309,6 +316,8 @@ Please cite these papers in your publications if it helps your research:
 (2) [trt-samples-for-hackathon-cn](https://github.com/NVIDIA/trt-samples-for-hackathon-cn)
 
 (3) [pytorch-YOLOv4](https://github.com/Tianxiaomo/pytorch-YOLOv4)
+
+(4) [darknet](https://github.com/AlexeyAB/darknet)
 
 
 
