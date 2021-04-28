@@ -160,7 +160,7 @@ polygraphy surgeon sanitize yolov3_spp_static.onnx
 (3) 由onnx模型生成engine
 
 需要注册ScatterND plugin，将[this repository](https://github.com/NVIDIA/trt-samples-for-hackathon-cn/tree/master/plugins)
-下的plugins文件夹以及Makifile文件放到当前目录录下，然后make MakeFile文件，进行编译，编译之后会在build文件夹下产生
+下的plugins文件夹以及Makifile文件放到当前目录下，然后make MakeFile文件，进行编译，编译之后会在build文件夹下产生
 一个ScatterND.so动态库。
 ``` shell 
 trtexec --onnx=yolov3_spp_static_folded.onnx 
