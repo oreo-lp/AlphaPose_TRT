@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="62077e2f-4a98-4ab6-aaca-25ce8b6ce404" name="Default Changelist" comment="初始化数据" />
+    <list default="true" id="62077e2f-4a98-4ab6-aaca-25ce8b6ce404" name="Default Changelist" comment="初始化数据">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -101,9 +103,9 @@
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2381" y="164" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1619590899672" />
-    <state x="2472" y="253" width="820" height="534" key="Vcs.Push.Dialog.v2" timestamp="1619595569822">
+    <state x="2472" y="253" width="820" height="534" key="Vcs.Push.Dialog.v2" timestamp="1619595671108">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state x="2472" y="253" width="820" height="534" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1619595569822" />
+    <state x="2472" y="253" width="820" height="534" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1619595671108" />
   </component>
 </project>
