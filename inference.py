@@ -272,7 +272,7 @@ if __name__ == "__main__":
                     hm_j = pose_model(inps_j)
                     tb = time.time()
                     print('-----------------------------------')
-                    print('    AlphaPose TRT inference time: %f' % (tb - ta))
+                    print('    AlphaPose inference time: %f' % (tb - ta))
                     print('-----------------------------------')
                     # hm_j = [1, 17, 64, 48]
                     # print("hm_j.shape = {}".format(hm_j.shape))
