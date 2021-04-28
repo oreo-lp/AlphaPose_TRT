@@ -134,7 +134,7 @@ YOLOv3-SPP(PyTorch)可以转成static shape的engine模型以及dynamic shape的
 ### 4.1 转成static shape的engine模型
 (1) YOLOv3_SPP转成onnx模型
 
-下载YOLOv3_SPP[cfg](https://raw.githubusercontent.com/AlexeyAB/darknet/master/cfg/yolov3-spp.cfg) 以及[weights](https://pjreddie.com/media/files/yolov3-spp.weights) ，并分别放在
+下载YOLOv3_SPP的[cfg](https://raw.githubusercontent.com/AlexeyAB/darknet/master/cfg/yolov3-spp.cfg) 以及[weights](https://pjreddie.com/media/files/yolov3-spp.weights) ，并分别放在
 ./detector/yolo/cfg/以及./detector/yolo/data/文件夹下。
 YOLOv3_SPP输入数据的尺寸默认为: 1x3x608x608
 
@@ -300,7 +300,7 @@ python trt_inference.py --yolo_engine ./yolov3_spp_static_folded.engine
 --detector yolo
 ```
 注意：在对视频的检测过程中，如果使用加速的YOLOv3_SPP模型会产生bug，因为这里使用未加速的YOLOv3_SPP
-模型，在后续的工作中会针对该bug对程序进行改进。
+模型，在后续的工作中会针对该bug对程序进行改进。其中--detector yolo表示使用未加速的YOLOv3_SPP模型，--detector yolo_trt表示使用加速的YOLOv3_SPP模型
 
 ## 7. Validation
 该部分使用加速前后的模型对MSCOCO 2017的验证集[val2017](https://cocodataset.org/#keypoints-2017) 进行测试。
