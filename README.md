@@ -1,4 +1,4 @@
-## Requirements
+## 1. Requirements
 * CUDA 11.1
 * TensorRT 7.2.2
 * Python 3.8.5
@@ -8,7 +8,7 @@
 * numpy 1.17.4 (numpy版本过高会出报错[this issue]: https://github.com/MVIG-SJTU/AlphaPose/issues/777)
 * python-package setuptools >= 40.0, reported by [this issue](https://github.com/MVIG-SJTU/AlphaPose/issues/838)
 
-## Results
+## 2. Results
 AlphaPose在数据预处理部分使用YOLOv3-SPP模型检测出一幅图像中的多个人体，然后分别将这些人体送入到FastPose模型中进行姿态估计。
 因此，我们对YOLOv3-SPP模型以及FastPose模型都进行了加速。下面的表格列举了加速前后的mAP值：
 Environment Results on COCO val 2017 (Tesla T4):
@@ -22,50 +22,50 @@ Environment Results on COCO val 2017 (Tesla T4):
 </center>
 
 
-### YOLOv3-SPP speed up
+### 2.1 YOLOv3-SPP speed up
 下面的表格列举了YOLOv3-SPP模型的加速比信息：
 <center>
 
 | model | Batchsize | Latency (ms) | Throughput  | Latency Speedup |Throughput speedup|
 |:-------|:-----:|:-------:|:-----:|:-------:|:-------:|
-| AlphaPose | 1 | 0.053532 | 18680.42 | 2.5x | 2.5x |
-|  | 2 | 0.092021 | 21734.17 | 2.7x | 2.7x |
-|  | 4 | 0.168305 | 23766.38 | 2.8x | 2.8x |
-|  | 8 | 0.316017 | 25315.09 | 2.8x | 2.8x |
-| **AlphaPose_trt** | **1** | **0.021086** | ***47424.83*** | | |
-|  | **2** | **0.034413** | ***58117.57*** | | |
-|  | **4** | **0.060228** | ***66414.29*** | | |
-|  | **8** | **0.113515** | ***70475.14*** | | |
+| YOLOv3-SPP | 1 | 0.0541 | 18484.29 |  |  |
+|  | 2 | 0.0939 | 21299.25 |  |  |
+|  | 4 | 0.1726 | 23174.97 |  |  |
+|  | 8 | 0.3228 | 24783.15 |  |  |
+| **YOLOv3-SPP_trt** | **1** | **0.0201** | **49751.24** | **2.7x** | **2.7x** |
+|  | **2** | **0.0337** | **59347.18** | **2.8x** | **2.8x** |
+|  | **4** | **0.0605** | **66115.70** | **2.9x** | **2.9x** |
+|  | **8** | **0.1155** | **69264.07** | **2.8x** | **2.8x** |
 
 
 </center>
 
-### Pose Estimation speed up
+### 2.2 Fast Pose speed up
 下面的表格列举了YOLOv3-SPP模型的加速比信息：
 <center>
 
 | model | Batchsize | Latency (ms) | Throughput  | Latency Speedup |Throughput speedup|
 |:-------|:-----:|:-------:|:-----:|:-------:|:-------:|
-| AlphaPose | 1 | 0.023896 | 41848.00 | 9x | 9x |
-|  | 2 | 0.024911 | 80285.82 | 7x | 7x |
-|  | 4 | 0.027914 | 143297.27 | 5.8x | 5.8x |
-|  | 8 | 0.033429 | 239313.17 | 4x | 4x |
-|  | 16 | 0.056172 | 284839.42 | 3.6x | 3.6x |
-|  | 32 | 0.104112 | 307361.30 | 3.5x | 3.5x |
-|  | 64 | 0.202907 | 315415.43 | 3.4x | 3.4x |
-| **AlphaPose_trt** | **1** | **0.002631** | ***380083.62*** | | |
-|  | **2** | **0.003602** | ***555247.08*** | | |
-|  | **4** | **0.004772** | ***838222.97*** | | |
-|  | **8** | **0.008537** | ***937097.34*** | | |
-|  | **16** | **0.015657** | ***1021907.13*** | | |
-|  | **32** | **0.029754** | ***1075485.65*** | | |
-|  | **64** | **0.058865** | ***1087233.50*** | | |
+| AlphaPose | 1 | 0.0239 | 41841.00 |  |  |
+|  | 2 | 0.0246 | 81300.81 |  |  |
+|  | 4 | 0.0279 | 143369.17 |  |  |
+|  | 8 | 0.0332 | 240963.85 |  |  |
+|  | 16 | 0.0566 | 282685.51 |  |  |
+|  | 32 | 0.1058 | 302457.46 |  |  |
+|  | 64 | 0.2062 | 310378.27 |  |  |
+| **AlphaPose_trt** | **1** | **0.00149** | **671140.94** | **16.0x** | **16.0x** |
+|  | **2** | **0.00232** | **862068.96** | **10.6x** | **10.6x** |
+|  | **4** | **0.00406** | **985221.67** | **6.9x** | **6.9x** |
+|  | **8** | **0.00769** | **1040312.09** | **4.3x** | **4.3x** |
+|  | **16** | **0.01516** | **1055408.97** | **3.7x** | **3.7x** |
+|  | **32** | **0.02998** | **1067378.25** | **3.5x** | **3.5x** |
+|  | **64** | **0.05967** | **1072565.78** | **3.5x** | **3.5x** |
 
 </center>
 
-### Code installation
+## 3. Code installation
    AlphaPose的安装参考自：https://github.com/MVIG-SJTU/AlphaPose/blob/master/docs/INSTALL.md
-#### (Recommended) Install with conda
+#### 3.1 (Recommended) Install with conda
 
 Install conda from [here](https://repo.anaconda.com/miniconda/), Miniconda3-latest-(OS)-(platform).
 ```shell
@@ -96,7 +96,7 @@ export LANG=C.UTF-8
 python setup.py build develop
 ```
 
-#### Install with pip
+#### 3.2 Install with pip
 ```shell
 # 1. Install PyTorch
 pip3 install torch==1.1.0 torchvision==0.3.0
@@ -116,8 +116,8 @@ sudo apt-get install libyaml-dev
 python3 setup.py build develop --user
 ```
 
-## YOLOv3-SPP to engine
-### 1. 生成static shape的engine模型
+## 4. YOLOv3-SPP to engine
+### 4.1 生成static shape的engine模型
 (1) YOLOv3-SPP转成onnx模型，输入数据的尺寸默认为: 1x3x608x608
 ``` shell
 python ./darknet2onnx.py 
@@ -144,7 +144,7 @@ trtexec --onnx=yolov3_spp_static_folded.onnx
 --plugins=build/ScatterND.so
 ```
 
-### 2. 生成dynamic shape的engine模型
+### 4.2 生成dynamic shape的engine模型
 (1)  YOLOv3-SPP转成onnx模型，输入数据的默认尺寸为: -1x3x608x608 (-1表示batch size可变)
 ``` shell
 python darknet2onnx_dynamic.py 
@@ -173,8 +173,8 @@ trtexec --onnx=yolov3_spp_-1_608_608_dynamic_folded.onnx
 --shapes=input:1x3x608x608
 ```
 
-## FastPose to engine
-### 1. 生成static shape的engine模型
+## 5. FastPose to engine
+### 5.1 生成static shape的engine模型
 (1) FastPose转成onnx模型. 模型输入数据的默认尺寸为: 1x3x256x192
 ``` shell
 python pytorch2onnx.py --cfg ./configs/coco/resnet/256x192_res50_lr1e-3_1x.yaml 
@@ -191,7 +191,7 @@ trtexec trtexec --onnx=fastPose.onnx
 ```
 执行该命令之后，会在当前目录下生成一个fastPose.engine模型
 
-### 2. 生成dynamic shape的engine模型
+### 5.2 生成dynamic shape的engine模型
 (1) 生成onnx模型，模型输入数据的默认尺寸为：-1x3x256x192 (-1表示batch size可变)
 ```shell
 python pytorch2onnx_dynamic.py 
@@ -214,9 +214,9 @@ trtexec --onnx=alphaPose_-1_3_256_192_dynamic.onnx
 执行该命令之后，会在当前目录下生成一个alphaPose_-1_3_256_192_dynamic.engine模型
 
 
-## inference
+## 6. Inference
 这一部分主要使用两个加速模型对图像以及视频进行检测
-### 对图像进行检测
+### 6.1 对图像进行检测
 将图像放在example/demo文件夹下，然后执行下面的指令，检测结果将保存在examples/res/vis文件夹下
 1. 使用未加速模型对图像进行检测
 ```shell
@@ -230,7 +230,7 @@ python inference.py --cfg ./configs/coco/resnet/256x192_res50_lr1e-3_1x.yaml
 python trt_inference.py --yolo_engine ./yolov3_spp_static_folded.engine --pose_engine ./fastPose.engine --cfg ./configs/coco/resnet/256x192_res50_lr1e-3_1x.yaml --checkpoint ./pretrained_models/fast_res50_256x192.pth --save_img  --indir ./examples/demo --dll_file ./build/ScatterND.so
 ```
 
-### 对视频进行检测
+### 6.2 对视频进行检测
 将视频放在videmo文件夹下，推理的结果将保存在examples/res文件夹下
 1. 使用未加速模型对图像进行检测
 ```shell
@@ -252,7 +252,7 @@ python trt_inference.py --yolo_engine ./yolov3_spp_static_folded.engine
 ```
 
 
-## Citation
+## 7. Citation
 Please cite these papers in your publications if it helps your research:
 
     @inproceedings{fang2017rmpe,
