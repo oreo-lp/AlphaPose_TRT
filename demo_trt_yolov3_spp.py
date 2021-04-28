@@ -105,6 +105,7 @@ def run_trt(args):
         trt.execute([t.data_ptr() for t in d_buffers], i2shape)
     torch.cuda.synchronize()
     time_trt = (time.time() - t0) / nRound
+    print('TensorRT time:', time_trt)
     return time_trt, output_data_trt
 
 
