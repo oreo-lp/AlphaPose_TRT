@@ -1,0 +1,16 @@
+easydict
+matplotlib
+munkres
+natsort
+opencv-python
+pycocotools==2.0.0
+pyyaml
+scipy==1.1.0
+six
+tensorboardx
+terminaltables
+timm==0.1.20
+torch>=1.1.0
+torchvision>=0.3.0
+tqdm
+visdom

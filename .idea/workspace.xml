@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="62077e2f-4a98-4ab6-aaca-25ce8b6ce404" name="Default Changelist" comment="初始化数据" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="oreo-lp &lt;l5161172959@163.com&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1rmoSVkisANwtTPgEySuNkpJfmn" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="62077e2f-4a98-4ab6-aaca-25ce8b6ce404" name="Default Changelist" comment="" />
+      <created>1619590625845</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1619590625845</updated>
+    </task>
+    <task id="LOCAL-00001" summary="初始化数据">
+      <created>1619591694034</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1619591694034</updated>
+    </task>
+    <task id="LOCAL-00002" summary="初始化数据">
+      <created>1619591833239</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1619591833239</updated>
+    </task>
+    <task id="LOCAL-00003" summary="初始化数据">
+      <created>1619591990208</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1619591990208</updated>
+    </task>
+    <task id="LOCAL-00004" summary="初始化数据">
+      <created>1619592339191</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1619592339191</updated>
+    </task>
+    <task id="LOCAL-00005" summary="初始化数据">
+      <created>1619593256188</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1619593256188</updated>
+    </task>
+    <task id="LOCAL-00006" summary="初始化数据">
+      <created>1619593296766</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1619593296766</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="初始化数据" />
+    <option name="LAST_COMMIT_MESSAGE" value="初始化数据" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2104" y="86" key="DiffContextDialog" timestamp="1619592131279">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2104" y="86" key="DiffContextDialog/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1619592131279" />
+    <state x="2735" y="417" key="Github.ShareDialog" timestamp="1619591335671">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2735" y="417" key="Github.ShareDialog/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1619591335671" />
+    <state x="2613" y="216" key="Github.UntrackedFilesDialog" timestamp="1619591102607">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2613" y="216" key="Github.UntrackedFilesDialog/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1619591102607" />
+    <state x="2381" y="164" key="SettingsEditor" timestamp="1619590899672">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2381" y="164" key="SettingsEditor/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1619590899672" />
+    <state x="2472" y="253" width="820" height="534" key="Vcs.Push.Dialog.v2" timestamp="1619595569822">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2472" y="253" width="820" height="534" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1619595569822" />
+  </component>
+</project>
