@@ -74,6 +74,7 @@ AlphaPose在数据预处理部分使用YOLOv3-SPP模型检测出一幅图像中�
 
 ## 3. Code installation
    AlphaPose的安装参考自[这](https://github.com/MVIG-SJTU/AlphaPose/blob/master/docs/INSTALL.md)
+，主要有两种安装方式
 #### 3.1 使用conda进行安装
 
 Install conda from [here](https://repo.anaconda.com/miniconda/)
@@ -126,6 +127,10 @@ python3 setup.py build develop --user
 ```
 
 ## 4. YOLOv3-SPP(PyTorch) to engine
+YOLOv3-SPP(PyTorch)可以转成static shape的engine模型以及dynamic shape的engine模型。前者表示engine的输入数据只能是
+固定的尺寸，而后者表示我们输入的数据尺寸可以是动态变化的，但是变化的范围要在我们转成engine时所设置的范围内。
+
+
 ### 4.1 转成static shape的engine模型
 (1) YOLOv3_SPP转成onnx模型
 
@@ -141,10 +146,10 @@ python ./darknet2onnx.py
 ```
 执行该命令之后，会在当前目录下产生一个yolov3_spp_static.onnx模型
 
-(2) 由于YOLOv3-SPP模型中存在Padding操作
+(2) 对模型进行修正
 
-trt不能直接识别，因此需要onnx进行修改 [this issue](https://github.com/onnx/onnx-tensorrt/blob/master/docs/faq.md#inputsat0-must-be-an-initializer-or-inputsat0is_weights
-)。需要额外下载tensorflow-gpu == 2.4.1以及polygraphy == 0.22.0模块。
+由于YOLOv3-SPP模型中存在Padding操作，trt不能直接识别，因此需要onnx进行修改 [this issue](https://github.com/onnx/onnx-tensorrt/blob/master/docs/faq.md#inputsat0-must-be-an-initializer-or-inputsat0is_weights
+)。可能需要额外下载tensorflow-gpu == 2.4.1以及polygraphy == 0.22.0模块。
 ``` shell
 polygraphy surgeon sanitize yolov3_spp_static.onnx 
 --fold-constants 
@@ -154,8 +159,8 @@ polygraphy surgeon sanitize yolov3_spp_static.onnx
 
 (3) 由onnx模型生成engine
 
-需要注册ScatterND plugin，[this repository](https://github.com/NVIDIA/trt-samples-for-hackathon-cn/tree/master/plugins)
-将plugins以及Makifile放到当前目录下放到当前目录下，然后对make MakeFile文件，进行编译，编译之后会在build文件加下产生
+需要注册ScatterND plugin，将[this repository](https://github.com/NVIDIA/trt-samples-for-hackathon-cn/tree/master/plugins)
+下的plugins文件夹以及Makifile文件放到当前目录录下，然后make MakeFile文件，进行编译，编译之后会在build文件夹下产生
 一个ScatterND.so动态库。
 ``` shell 
 trtexec --onnx=yolov3_spp_static_folded.onnx 
@@ -166,7 +171,7 @@ trtexec --onnx=yolov3_spp_static_folded.onnx
 ```
 执行该命令之后，会在当前目录下产生一个yolov3_spp_static_folded.engine模型
 
-### 4.2 生成dynamic shape的engine模型
+### 4.2 转成dynamic shape的engine模型
 (1)  YOLOv3_SPP模型转成onnx模型
 
 输入数据的默认尺寸为: -1x3x608x608 (-1表示batch size可变)
@@ -186,8 +191,8 @@ polygraphy surgeon sanitize yolov3_spp_-1_608_608_dynamic.onnx
 
 (3) 由onnx模型转成engine
 
-minShapes设置能够输入数据的最小尺寸，optShapes可以与minShapes保持一致，maxShapes设置
-输入数据的最大尺寸，这三个是必须要设置的，可通过trtexec -h查看具体用法。
+minShapes设置能够输入数据的最小尺寸，optShapes可以与minShapes保持一致，maxShapes设置输入数据的最大尺寸，这三个是必须要设置的，可通过trtexec -h查看具体用法。
+转换模型的时候一定需要将ScatterND.so动态库进行加载，不然可能会报该plugin无法识别的错误。
 ``` shell
 trtexec --onnx=yolov3_spp_-1_608_608_dynamic_folded.onnx 
 --explicitBatch 
@@ -199,7 +204,8 @@ trtexec --onnx=yolov3_spp_-1_608_608_dynamic_folded.onnx
 --maxShapes=input:64x3x608x608 
 --shapes=input:1x3x608x608
 ```
-执行该命令之后，会在当前目录下产生一个yolov3_spp_-1_608_608_dynamic_folded.engine 模型
+执行该命令之后，会在当前目录下产生一个yolov3_spp_-1_608_608_dynamic_folded.engine 模型(之后
+我们可以传入不同batch size的输入数据进行推理)
 
 ## 5. FastPose to engine
 ### 5.1 生成static shape的engine模型
@@ -247,44 +253,77 @@ trtexec --onnx=alphaPose_-1_3_256_192_dynamic.onnx
 
 
 ## 6. Inference
-这一部分主要使用两个加速模型对图像以及视频进行检测
+这一部分主要使用加速前后的模型对图像以及视频进行检测
 ### 6.1 对图像进行检测
 将图像放在example/demo文件夹下，然后执行下面的指令，检测结果将保存在examples/res/vis文件夹下
-1. 使用未加速模型对图像进行检测
+
+(1) 使用未加速模型对图像进行检测
 ```shell
 python inference.py --cfg ./configs/coco/resnet/256x192_res50_lr1e-3_1x.yaml 
 --checkpoint ./pretrained_models/fast_res50_256x192.pth  
 --save_img  --showbox 
 --indir ./examples/demo
 ```
-2. 使用tensorRT加速模型对图像进行检测
+
+(2) 使用tensorRT加速模型对图像进行检测
 ```shell
-python trt_inference.py --yolo_engine ./yolov3_spp_static_folded.engine --pose_engine ./fastPose.engine --cfg ./configs/coco/resnet/256x192_res50_lr1e-3_1x.yaml --checkpoint ./pretrained_models/fast_res50_256x192.pth --save_img  --indir ./examples/demo --dll_file ./build/ScatterND.so
+python trt_inference.py 
+--yolo_engine ./yolov3_spp_static_folded.engine 
+--pose_engine ./fastPose.engine 
+--cfg ./configs/coco/resnet/256x192_res50_lr1e-3_1x.yaml 
+--save_img  
+--indir ./examples/demo 
+--dll_file ./build/ScatterND.so
 ```
+如果希望检测结果对人体进行目标检测，可以加上--showbox
 
 ### 6.2 对视频进行检测
-将视频放在videmo文件夹下，推理的结果将保存在examples/res文件夹下
-1. 使用未加速模型对图像进行检测
+将视频放在video文件夹下，推理的结果将保存在examples/res文件夹下
+
+(1) 使用未加速模型对视频进行检测
 ```shell
 python inference.py --cfg ./configs/coco/resnet/256x192_res50_lr1e-3_1x.yaml
 --checkpoint ./pretrained_models/fast_res50_256x192.pth 
 --save_video
 --video ./videos/demo.avi
 ```
-2. 使用tensorRT加速模型对图像进行检测
+
+(2) 使用tensorRT加速模型对视频进行检测
 ```shell
 python trt_inference.py --yolo_engine ./yolov3_spp_static_folded.engine
 --cfg ./configs/coco/resnet/256x192_res50_lr1e-3_1x.yaml
---checkpoint ./pretrained_models/fast_res50_256x192.pth 
 --save_video
 --video ./videos/demo_short.avi 
 --dll_file ./build/ScatterND.so
 --pose_engine ./fastPose.engine 
 --detector yolo
 ```
+注意：在对视频的检测过程中，如果使用加速的YOLOv3_SPP模型会产生bug，因为这里使用未加速的YOLOv3_SPP
+模型，在后续的工作中会针对该bug对程序进行改进。
 
+## 7. Validation
+该部分使用加速前后的模型对MSCOCO 2017的验证集[val2017](https://cocodataset.org/#keypoints-2017) 进行测试。
+将annotations以及val207放到data/coco文件夹下。
+ 
+ (1) 使用未加速的模型进行验证
+ ```shell
+python validate.py --cfg ./configs/coco/resnet/256x192_res50_lr1e-3_1x.yaml 
+--checkpoint ./pretrained_models/fast_res50_256x192.pth  
+--flip-test
+--detector yolo
+```
 
-## 7. Citation
+(2) 使用加速的模型进行验证
+```
+python validate_trt.py --cfg ./configs/coco/resnet/256x192_res50_lr1e-3_1x.yaml 
+--pose_engine ./fastPose.engine 
+--yolo_engine ./yolov3_spp_static_folded.engine 
+--dll_file ./build/ScatterND.so 
+--flip-test
+--detector yolo_trt
+```
+
+## 8. Citation
 Please cite these papers in your publications if it helps your research:
 
     @inproceedings{fang2017rmpe，
