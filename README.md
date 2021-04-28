@@ -207,7 +207,7 @@ trtexec --onnx=yolov3_spp_-1_608_608_dynamic_folded.onnx
 执行该命令之后，会在当前目录下产生一个yolov3_spp_-1_608_608_dynamic_folded.engine 模型(之后
 我们可以传入不同batch size的输入数据进行推理)
 
-## 5. FastPose to engine
+## 5. FastPose(PyTorch) to engine
 ### 5.1 生成static shape的engine模型
 (1) FastPose转成onnx模型
 
@@ -251,6 +251,7 @@ trtexec --onnx=alphaPose_-1_3_256_192_dynamic.onnx
 ```
 执行该命令之后，会在当前目录下生成一个alphaPose_-1_3_256_192_dynamic.engine模型
 
+上面的所有模型都可以从[baidu Pan](https://pan.baidu.com/s/13z0aY0LhetgJn6U23tY1wQ) 获取(提取码: cumt)
 
 ## 6. Inference
 这一部分主要使用加速前后的模型对图像以及视频进行检测
@@ -348,7 +349,7 @@ Please cite these papers in your publications if it helps your research:
     }
 
 
-## 8. Reference
+## 9. Reference
 
 (1) [AlphaPose](https://github.com/MVIG-SJTU/AlphaPose)
 
