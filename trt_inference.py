@@ -209,9 +209,9 @@ if __name__ == "__main__":
         from alphapose.utils.writer import DEFAULT_VIDEO_SAVE_OPT as video_save_opt
 
         if mode == 'video':
-            video_save_opt['savepath'] = os.path.join(args.outputpath, 'AlphaPose_' + os.path.basename(input_source))
+            video_save_opt['savepath'] = os.path.join(args.outputpath, 'AlphaPose_trt_' + os.path.basename(input_source))
         else:
-            video_save_opt['savepath'] = os.path.join(args.outputpath, 'AlphaPose_webcam' + str(input_source) + '.mp4')
+            video_save_opt['savepath'] = os.path.join(args.outputpath, 'AlphaPose_webcam_trt' + str(input_source) + '.mp4')
         video_save_opt.update(det_loader.videoinfo)
         writer = DataWriter(cfg, args, save_video=True, video_save_opt=video_save_opt, queueSize=queueSize).start()
     else:
