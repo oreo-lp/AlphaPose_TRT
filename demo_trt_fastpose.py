@@ -1,5 +1,5 @@
 """
-    计算alphapose加速比的方法
+    计算fastpose加速比的方法
 """
 import torch
 import torchvision
@@ -17,7 +17,7 @@ from tools.trt_lite import TrtLite
 
 
 def get_parser():
-    parser = argparse.ArgumentParser(description='AlphaPose Demo')
+    parser = argparse.ArgumentParser(description='FastPose Demo')
     parser.add_argument('--cfg', type=str, default='./configs/coco/resnet/256x192_res50_lr1e-3_1x.yaml',
                         help='experiment configure file name')
     parser.add_argument('--checkpoint', type=str, default='./pretrained_models/fast_res50_256x192.pth',
