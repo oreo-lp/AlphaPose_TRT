@@ -47,7 +47,7 @@ def update_config(config_file):
         return config
 
 
-def run_alphapose(args):
+def run_fastpose(args):
     """
         运行alphapose模型，计算它的推理时间
     """
@@ -90,22 +90,16 @@ def run_trt(args):
     d_buffers = trt.allocate_io_buffers(i2shape, True)
     # 保存输出的结果
     output_data_trt = np.zeros(io_info[1][2], dtype=np.float32)
-    input_data = torch.randn(args.batch, 3, 256, 192, dtype=torch.float32, device='cuda')
-    # 利用PyTorch和PyCUDA的interop，保留数据始终在显存上（使用指针，将数据始终保存在显存上）
-    cuda.memcpy_dtod(d_buffers[0], PyTorchTensorHolder(input_data),
-                     input_data.nelement() * input_data.element_size())
-    # 下面一行的作用跟上一行一样，不过它是把数据拷到cpu再拷回gpu，效率低。作为注释留在这里供参考
-    # cuda.memcpy_htod(d_buffers[0], input_data.cpu().detach().numpy())
-    trt.execute(d_buffers, i2shape)
-    # 将显存中的数据保存到主存上来
-    cuda.memcpy_dtoh(output_data_trt, d_buffers[1])
-    # 计算加速的时间
-    cuda.Context.synchronize()
+    input_data = torch.randn(args.batch, 3, args.height, args.height, dtype=torch.float32, device='cuda')
+    d_buffers[0] = input_data
+    trt.execute([t.data_ptr() for t in d_buffers], i2shape)
+    output_data_trt = d_buffers[1].cpu().numpy()
     nRound = 100
+    torch.cuda.synchronize()
     t0 = time.time()
     for i in range(nRound):
-        trt.execute(d_buffers, i2shape)
-    cuda.Context.synchronize()
+        trt.execute([t.data_ptr() for t in d_buffers], i2shape)
+    torch.cuda.synchronize()
     time_trt = (time.time() - t0) / nRound
     print('TensorRT time:', time_trt)
     return time_trt, output_data_trt
@@ -113,7 +107,7 @@ def run_trt(args):
 
 if __name__ == '__main__':
     arg = get_parser()
-    time_pytorch, output_data_pytorch = run_alphapose(arg)
+    time_pytorch, output_data_pytorch = run_fastpose(arg)
     time_trt, output_data_trt = run_trt(arg)
     print('Speedup:', time_pytorch / time_trt)
     # print('Average diff percentage:',
