@@ -29,12 +29,10 @@ AlphaPose在数据预处理部分使用YOLOv3-SPP模型检测出一幅图像中�
 </center>
 
 
-### 2.1 YOLOv3-SPP speed up
-下表记录了YOLOv3_SPP模型在不同batch size下的推理时间以及吞吐量，并计算了加速比(第三列以及第四列)。
 
-测试过程对GPU以及Memory进行了锁频
+**所有的测试过程都对GPU以及Memory进行了锁频**
 
-GPU Frequency = 1509HZ, Memory Frequency = 5001HZ
+GPU Frequency = **1509HZ**, Memory Frequency = **5001HZ**，具体操作如下：
 
 ```shell 
 nvidia-smi -pm 1
@@ -43,6 +41,10 @@ nvidia-smi -ac memoryFrq, gpuFrq
 nvidia-smi -lgc gpuFrq,gpuFrq   # 将GPU进行锁频
 
 ```
+
+### 2.1 YOLOv3-SPP speed up
+下表记录了YOLOv3_SPP模型在不同batch size下的推理时间以及吞吐量，并计算了加速比(第三列以及第四列)。
+
 
 吞吐量Throughput = 1000 / latency * batchsize
 
@@ -89,7 +91,6 @@ Latency speed up = trt latency / original latency
 ### 2.3 YOLOv3-SPP + FastPose speed up
 下表记录了YOLOv3_SPP + FastPose模型在不同batch size下的推理时间以及吞吐量，并计算了加速比(第三列以及第四列)。
 
-吞吐量Throughput = 1000 / latency * batchsize
 <center>
 
 | model | Batchsize | Latency (ms) | Throughput  | Latency Speedup |Throughput speedup|
