@@ -3,7 +3,7 @@
 """
 from detector.yolo.darknet import *
 import torch
-from detector.yolo.darknet import Darknet
+from detector.yolo.darknet_trt import Darknet
 from easydict import EasyDict as edict
 import yaml
 import argparse
