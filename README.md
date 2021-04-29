@@ -46,9 +46,9 @@ nvidia-smi -lgc gpuFrq,gpuFrq   # 将GPU进行锁频
 下表记录了YOLOv3_SPP模型在不同batch size下的推理时间以及吞吐量，并计算了加速比(第三列以及第四列)。
 
 
-吞吐量Throughput = 1000 / latency * batchsize
+吞吐量: Throughput = 1000 / latency * batchsize
 
-Latency speed up = original latency / trt latency
+时延: Latency speed up = original latency / trt latency
 <center>
 
 | model | Batchsize | Latency (ms) | Throughput  | Latency Speedup |Throughput speedup|
