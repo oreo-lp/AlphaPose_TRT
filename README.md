@@ -383,8 +383,8 @@ python demo_trt_yolov3_spp.py --cfg ./detector/yolo/cfg/yolov3-spp.cfg
 ```
 python demo_trt_alphapose.py 
 --fastpose_cfg ./configs/coco/resnet/256x192_res50_lr1e-3_1x.yaml
--- yolo_cfg ./detector/yolo/cfg/yolov3-spp.cfg
--- weight ./detector/yolo/data/yolov3-spp.weights
+--yolo_cfg ./detector/yolo/cfg/yolov3-spp.cfg
+--weight ./detector/yolo/data/yolov3-spp.weights
 --checkpoint ./pretrained_models/fast_res50_256x192.pth
 --fastpose_engine ./alphaPose_-1_3_256_192_dynamic.engine
 --yolo_engine ./yolov3_spp_-1_608_608_dynamic_folded.engine
@@ -433,6 +433,3 @@ Please cite these papers in your publications if it helps your research:
 (3) [pytorch-YOLOv4](https://github.com/Tianxiaomo/pytorch-YOLOv4)
 
 (4) [darknet](https://github.com/AlexeyAB/darknet)
-
-
-
