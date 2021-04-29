@@ -14,7 +14,7 @@ import os
 import argparse
 import numpy as np
 # from tools.trt_lite import TrtLite
-from tools.trt_lite2 import TrtLite
+from tools.trt_lite import TrtLite
 from detector.yolo.darknet_trt import Darknet
 
 
