@@ -18,7 +18,7 @@
 </div>
 AlphaPose在数据预处理部分使用YOLOv3-SPP模型检测出一幅图像中的多个人物，然后将这些人物图像送入到FastPose模型中进行姿态估计。
 我们对YOLOv3_SPP模型以及FastPose模型都进行了加速， 并记录了加速前后的mAP值 (COCO val 2017， Tesla T4)。 其中ground truth box表示FastPose模型
-的检测精度， detection boxes表示YOLOv_SPP + FastPose模型的检测精度。
+的检测精度， detection boxes表示YOLOv3_SPP + FastPose模型的检测精度。
 <center>
 
 | Method | ground truth box mAP@0.6 | detection boxes mAP@0.6 | 
