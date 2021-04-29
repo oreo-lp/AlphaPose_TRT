@@ -48,7 +48,7 @@ nvidia-smi -lgc gpuFrq,gpuFrq   # 将GPU进行锁频
 
 吞吐量Throughput = 1000 / latency * batchsize
 
-Latency speed up = trt latency / original latency
+Latency speed up = original latency / trt latency
 <center>
 
 | model | Batchsize | Latency (ms) | Throughput  | Latency Speedup |Throughput speedup|
@@ -64,6 +64,7 @@ Latency speed up = trt latency / original latency
 
 
 </center>
+代码实现参考8.2部分
 
 ### 2.2 Fast Pose speed up
 下表记录了Fast Pose模型在不同batch size下的推理时间以及吞吐量，并计算了加速比(第三列以及第四列)。
@@ -87,6 +88,7 @@ Latency speed up = trt latency / original latency
 |  | 64 | 59.67 | 1072.57 | **3.5x** | **3.5x** |
 
 </center>
+代码实现参考8.1部分
 
 ### 2.3 YOLOv3-SPP + FastPose speed up
 下表记录了YOLOv3_SPP + FastPose模型在不同batch size下的推理时间以及吞吐量，并计算了加速比(第三列以及第四列)。
@@ -105,6 +107,7 @@ Latency speed up = trt latency / original latency
 |  | 8 | 123.19 | 64.94 | **3.5x** | **3.5x** |
 
 </center>
+代码实现参考8.3部分
 
 ## 3. Code installation
    AlphaPose的安装参考自[这](https://github.com/MVIG-SJTU/AlphaPose/blob/master/docs/INSTALL.md)
