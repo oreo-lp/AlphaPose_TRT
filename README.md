@@ -57,10 +57,10 @@ Latency speed up = trt latency / original latency
 |  | 2 | 93.9 | 21.30 |  |  |
 |  | 4 | 172.6 | 23.17 |  |  |
 |  | 8 | 322.8 | 24.78 |  |  |
-| **YOLOv3-SPP_trt** | 1 | 20.1 | 49.75 | **0.37x** | **2.7x** |
-|  | 2 | 33.7 | 59.35 | **0.36x** | **2.8x** |
-|  | 4 | 60.5 | 66.12 | **0.34x** | **2.9x** |
-|  | 8 | 115.5 | 69.26 | **0.36x** | **2.8x** |
+| **YOLOv3-SPP_trt** | 1 | 20.1 | 49.75 | **2.7x** | **2.7x** |
+|  | 2 | 33.7 | 59.35 | **2.8x** | **2.8x** |
+|  | 4 | 60.5 | 66.12 | **2.9x** | **2.9x** |
+|  | 8 | 115.5 | 69.26 | **2.8x** | **2.8x** |
 
 
 </center>
@@ -78,13 +78,13 @@ Latency speed up = trt latency / original latency
 |  | 16 | 56.6 | 282.68 |  |  |
 |  | 32 | 105.8 | 302.46 |  |  |
 |  | 64 | 206.2 | 310.38 |  |  |
-| **FastPose_trt** | 1 | 1.49 | 671.14 | **0.062x** | **16.0x** |
-|  | 2 | 2.32 | 862.07 | **0.094x** | **10.6x** |
-|  | 4 | 4.06 | 985.22 | **0.145x** | **6.9x** |
-|  | 8 | 7.69 | 1040.31 | **0.232x** | **4.3x** |
-|  | 16 | 15.16 | 1055.41 | **0.315x** | **3.7x** |
-|  | 32 | 29.98 | 1067.38 | **0.285x** | **3.5x** |
-|  | 64 | 59.67 | 1072.57 | **0.285x** | **3.5x** |
+| **FastPose_trt** | 1 | 1.49 | 671.14 | **16.0x** | **16.0x** |
+|  | 2 | 2.32 | 862.07 | **10.6x** | **10.6x** |
+|  | 4 | 4.06 | 985.22 | **6.9x** | **6.9x** |
+|  | 8 | 7.69 | 1040.31 | **4.3x** | **4.3x** |
+|  | 16 | 15.16 | 1055.41 | **3.7x** | **3.7x** |
+|  | 32 | 29.98 | 1067.38 | **3.5x** | **3.5x** |
+|  | 64 | 59.67 | 1072.57 | **3.5x** | **3.5x** |
 
 </center>
 
@@ -99,10 +99,10 @@ Latency speed up = trt latency / original latency
 |  | 2 | 118.5 | 16.87 |  |  |
 |  | 4 | 200.5 | 19.95 |  |  |
 |  | 8 | 356 | 22.47 |  |  |
-| **AlphaPose_trt** | 1 | 21.59 | 46.32 | **0.28x** | **3.6x** |
-|  | 2 | 36.02 | 55.52 | **0.30x** | **3.3x** |
-|  | 4 | 64.56 | 61.96 | **0.32x** | **3.1x** |
-|  | 8 | 123.19 | 64.94 | **0.29x** | **3.5x** |
+| **AlphaPose_trt** | 1 | 21.59 | 46.32 | **3.6x** | **3.6x** |
+|  | 2 | 36.02 | 55.52 | **3.3x** | **3.3x** |
+|  | 4 | 64.56 | 61.96 | **3.1x** | **3.1x** |
+|  | 8 | 123.19 | 64.94 | **3.5x** | **3.5x** |
 
 </center>
 
@@ -333,8 +333,8 @@ python trt_inference.py --yolo_engine ./yolov3_spp_static_folded.engine
 --pose_engine ./fastPose.engine 
 --detector yolo
 ```
-注意：在对视频的检测过程中，如果使用加速的YOLOv3_SPP模型会产生bug，所以这里使用未加速的YOLOv3_SPP
-模型，在后续的工作中会针对该bug对程序进行改进。其中--detector **yolo** 表示使用**未**加速的YOLOv3_SPP模型，--detector **yolo_trt** 表示使用加速的YOLOv3_SPP模型
+注意：在对视频的检测过程中，如果使用加速的YOLOv3_SPP模型会产生bug，因为这里使用未加速的YOLOv3_SPP
+模型，在后续的工作中会针对该bug对程序进行改进。其中--detector yolo表示使用未加速的YOLOv3_SPP模型，--detector yolo_trt表示使用加速的YOLOv3_SPP模型
 
 ## 7. Validation
 该部分使用加速前后的模型对MSCOCO 2017的验证集[val2017](https://cocodataset.org/#keypoints-2017) 进行测试。
@@ -357,8 +357,38 @@ python validate_trt.py --cfg ./configs/coco/resnet/256x192_res50_lr1e-3_1x.yaml
 --flip-test
 --detector yolo_trt
 ```
+## 8. Speed Up Validation
+### 8.1 FastPose模型加速效果验证
+可以使用下面命令对FastPose人体姿态检测模型的加速效果进行验证，这里使用的是dynamic shape的engine进行推理。
+```shell
+python demo_trt_fastpose.py 
+--cfg ./configs/coco/resnet/256x192_res50_lr1e-3_1x.yaml 
+--checkpoint ./pretrained_models/fast_res50_256x192.pth 
+--engine_path ./alphaPose_-1_3_256_192_dynamic.engine --batch 1
+```
+### 8.2 YOLOv3_SPP模型加速效果验证
+可以使用下面命令对YOLOv3_SPP人体目标检测的加速效果进行验证。
+```shell
+python demo_trt_yolov3_spp.py --cfg ./detector/yolo/cfg/yolov3-spp.cfg 
+--weight ./detector/yolo/data/yolov3-spp.weights 
+--engine_path ./yolov3_spp_-1_608_608_dynamic_folded.engine
+--batch 1
+```
 
-## 8. TODO
+### 8.3 AlphaPose(YOLOv3_SPP + FastPose)
+可以使用下面命令对AlphaPose模型的加速效果进行验证。
+```
+python demo_trt_alphapose.py 
+--fastpose_cfg ./configs/coco/resnet/256x192_res50_lr1e-3_1x.yaml
+-- yolo_cfg ./detector/yolo/cfg/yolov3-spp.cfg
+-- weight ./detector/yolo/data/yolov3-spp.weights
+--checkpoint ./pretrained_models/fast_res50_256x192.pth
+--fastpose_engine ./alphaPose_-1_3_256_192_dynamic.engine
+--yolo_engine ./yolov3_spp_-1_608_608_dynamic_folded.engine
+--batch 1
+```
+
+## 9. TODO
 - [ ] 目标检测使用轻量级网络(YOLOv3-tiny, YOLOv4_tiny等)
 - [ ] 使用numpy+pycuda进行推理加速
 - [ ] 模型蒸馏
@@ -366,7 +396,7 @@ python validate_trt.py --cfg ./configs/coco/resnet/256x192_res50_lr1e-3_1x.yaml
 - [ ] 使用C++的API实现TensorRT加速
 
 
-## 9. Citation
+## 10. Citation
 Please cite these papers in your publications if it helps your research:
 
     @inproceedings{fang2017rmpe，
@@ -391,7 +421,7 @@ Please cite these papers in your publications if it helps your research:
     }
 
 
-## 10. Reference
+## 11. Reference
 
 (1) [AlphaPose](https://github.com/MVIG-SJTU/AlphaPose)
 
