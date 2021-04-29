@@ -333,8 +333,8 @@ python trt_inference.py --yolo_engine ./yolov3_spp_static_folded.engine
 --pose_engine ./fastPose.engine 
 --detector yolo
 ```
-注意：在对视频的检测过程中，如果使用加速的YOLOv3_SPP模型会产生bug，因为这里使用未加速的YOLOv3_SPP
-模型，在后续的工作中会针对该bug对程序进行改进。其中--detector yolo表示使用未加速的YOLOv3_SPP模型，--detector yolo_trt表示使用加速的YOLOv3_SPP模型
+注意：在对视频的检测过程中，如果使用加速的YOLOv3_SPP模型会产生bug，所以这里使用未加速的YOLOv3_SPP
+模型，在后续的工作中会针对该bug对程序进行改进。其中**--detector yolo** 表示使用未加速的YOLOv3_SPP模型，**--detector yolo_trt** 表示使用加速的YOLOv3_SPP模型
 
 ## 7. Validation
 该部分使用加速前后的模型对MSCOCO 2017的验证集[val2017](https://cocodataset.org/#keypoints-2017) 进行测试。
