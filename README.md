@@ -358,7 +358,15 @@ python validate_trt.py --cfg ./configs/coco/resnet/256x192_res50_lr1e-3_1x.yaml
 --detector yolo_trt
 ```
 
-## 8. Citation
+## 8. TODO
+- [ ] 目标检测使用轻量级网络(YOLOv3-tiny, YOLOv4_tiny等)
+- [ ] 使用numpy+pycuda进行推理加速
+- [ ] 模型蒸馏
+- [ ] 模型剪枝
+- [ ] 使用C++的API实现TensorRT加速
+
+
+## 9. Citation
 Please cite these papers in your publications if it helps your research:
 
     @inproceedings{fang2017rmpe，
@@ -383,7 +391,7 @@ Please cite these papers in your publications if it helps your research:
     }
 
 
-## 9. Reference
+## 10. Reference
 
 (1) [AlphaPose](https://github.com/MVIG-SJTU/AlphaPose)
 
