@@ -20,7 +20,7 @@ import pycuda.driver as cuda
 import numpy as np
 import pycuda.autoinit
 import tensorrt as trt
-import cv2
+import torch
 import time
 import ctypes
 
@@ -154,20 +154,19 @@ class TrtTiny(object):
 
 class TrtLite:
     def __init__(self, dll_file=None, build_engine_proc=None, build_engine_params=None, engine_file_path=None):
-
-        logger = tensorrt.Logger(tensorrt.Logger.INFO)
-        # add plugins
+        logger = trt.Logger(trt.Logger.INFO)
+        # register plugin
         if dll_file is not None:
             ctypes.cdll.LoadLibrary(dll_file)
         trt.init_libnvinfer_plugins(logger, '')
         if engine_file_path is None:
-            with tensorrt.Builder(logger) as builder:
+            with trt.Builder(logger) as builder:
                 if build_engine_params is not None:
                     self.engine = build_engine_proc(builder, *build_engine_params)
                 else:
                     self.engine = build_engine_proc(builder)
         else:
-            with open(engine_file_path, 'rb') as f, tensorrt.Runtime(logger) as runtime:
+            with open(engine_file_path, 'rb') as f, trt.Runtime(logger) as runtime:
                 self.engine = runtime.deserialize_cuda_engine(f.read())
         self.context = self.engine.create_execution_context()
 
@@ -182,11 +181,11 @@ class TrtLite:
     def get_io_info(self, input_desc):
         def to_numpy_dtype(trt_dtype):
             tb = {
-                tensorrt.DataType.BOOL: np.dtype('bool'),
-                tensorrt.DataType.FLOAT: np.dtype('float32'),
-                tensorrt.DataType.HALF: np.dtype('float16'),
-                tensorrt.DataType.INT32: np.dtype('int32'),
-                tensorrt.DataType.INT8: np.dtype('int8'),
+                trt.DataType.BOOL: np.dtype('bool'),
+                trt.DataType.FLOAT: np.dtype('float32'),
+                trt.DataType.HALF: np.dtype('float16'),
+                trt.DataType.INT32: np.dtype('int32'),
+                trt.DataType.INT8: np.dtype('int8'),
             }
             return tb[trt_dtype]
 
@@ -198,11 +197,12 @@ class TrtLite:
             for i, shape in i2shape.items():
                 self.context.set_binding_shape(i, shape)
             return [(self.engine.get_binding_name(i), self.engine.binding_is_input(i),
-                     self.context.get_binding_shape(i), to_numpy_dtype(self.engine.get_binding_dtype(i))) for i in
-                    range(self.engine.num_bindings)]
+                     tuple(self.context.get_binding_shape(i)), to_numpy_dtype(self.engine.get_binding_dtype(i))) for i
+                    in range(self.engine.num_bindings)]
 
         batch_size = input_desc
-        return [(self.engine.get_binding_name(i), self.engine.binding_is_input(i),
+        return [(self.engine.get_binding_name(i),
+                 self.engine.binding_is_input(i),
                  (batch_size,) + tuple(self.context.get_binding_shape(i)),
                  to_numpy_dtype(self.engine.get_binding_dtype(i))) for i in range(self.engine.num_bindings)]
 
@@ -211,7 +211,15 @@ class TrtLite:
         if io_info is None:
             return
         if on_gpu:
-            return [cuda.mem_alloc(reduce(lambda x, y: x * y, i[2]) * i[3].itemsize) for i in io_info]
+            cuda = torch.device('cuda')
+            np2pth = {
+                np.dtype('bool'): torch.bool,
+                np.dtype('float32'): torch.float32,
+                np.dtype('float16'): torch.float16,
+                np.dtype('int32'): torch.int32,
+                np.dtype('int8'): torch.int8,
+            }
+            return [torch.empty(i[2], dtype=np2pth[i[3]], device=cuda) for i in io_info]
         else:
             return [np.zeros(i[2], i[3]) for i in io_info]
 
@@ -234,3 +242,4 @@ class TrtLite:
                   self.engine.get_binding_shape(i),
                   -1 if -1 in self.engine.get_binding_shape(i) else reduce(
                       lambda x, y: x * y, self.engine.get_binding_shape(i)) * self.engine.get_binding_dtype(i).itemsize)
+
