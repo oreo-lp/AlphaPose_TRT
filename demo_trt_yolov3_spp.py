@@ -2,24 +2,16 @@
     计算alphapose加速比的方法
 """
 import torch
-import torchvision
-from torchsummary import summary
 import time
-import pycuda.driver as cuda
-import pycuda.autoinit
-from alphapose.models import builder
-from easydict import EasyDict as edict
-import yaml
 import os
 import argparse
 import numpy as np
-# from tools.trt_lite import TrtLite
 from tools.trt_lite import TrtLite
 from detector.yolo.darknet_trt import Darknet
 
 
 def get_parser():
-    parser = argparse.ArgumentParser(description='AlphaPose Demo')
+    parser = argparse.ArgumentParser(description='YOLOv3_SPP Demo')
     parser.add_argument('--cfg', type=str, default='./detector/yolo/cfg/yolov3-spp.cfg',
                         help='experiment configure file name')
     parser.add_argument('--weight', type=str, default='./detector/yolo/data/yolov3-spp.weights',
@@ -28,25 +20,10 @@ def get_parser():
     parser.add_argument('--height', type=int, default=608, help='image height of input')
     parser.add_argument('--width', type=int, default=608, help='image width of input')
     parser.add_argument('--device', type=str, default='cuda:0', help='gpu id')
-    parser.add_argument('--engine_path', type=str, default='./yolov3_spp_static_folded.engine',
+    parser.add_argument('--engine_path', type=str, default='./yolov3_spp_-1_608_608_dynamic_folded.engine',
                         help='the path of txt engine')
     args = parser.parse_args()
     return args
-
-
-class PyTorchTensorHolder(pycuda.driver.PointerHolderBase):
-    def __init__(self, tensor):
-        super(PyTorchTensorHolder, self).__init__()
-        self.tensor = tensor
-
-    def get_pointer(self):
-        return self.tensor.data_ptr()
-
-
-# def update_config(config_file):
-#     with open(config_file) as f:
-#         config = edict(yaml.load(f, Loader=yaml.FullLoader))
-#         return config
 
 
 def run_yolov3(args):
