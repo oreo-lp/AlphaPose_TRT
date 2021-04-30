@@ -45,6 +45,7 @@ nvidia-smi -lgc gpuFrq,gpuFrq   # 将GPU进行锁频
 
 ### 2.1 YOLOv3-SPP speed up
 下表记录了YOLOv3_SPP模型在不同batch size下的推理时间以及吞吐量，并计算了加速比(第三列以及第四列)。
+
 实验环境为：**Tesla T4**
 
 吞吐量: Throughput = 1000 / latency * batchsize
@@ -69,6 +70,7 @@ nvidia-smi -lgc gpuFrq,gpuFrq   # 将GPU进行锁频
 
 ### 2.2 Fast Pose speed up
 下表记录了Fast Pose模型在不同batch size下的推理时间以及吞吐量，并计算了加速比(第三列以及第四列)。
+
 实验环境为：**Tesla T4**
 
 <center>
@@ -95,6 +97,7 @@ nvidia-smi -lgc gpuFrq,gpuFrq   # 将GPU进行锁频
 
 ### 2.3 YOLOv3-SPP + FastPose speed up
 下表记录了YOLOv3_SPP + FastPose模型在不同batch size下的推理时间以及吞吐量，并计算了加速比(第三列以及第四列)。
+
 实验环境为：**Tesla T4**
 
 <center>
