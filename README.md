@@ -54,7 +54,7 @@ nvidia-smi -lgc gpuFrq,gpuFrq   # 将GPU进行锁频
 
 | model | Batchsize | Latency (ms) | Throughput  | Latency Speedup |Throughput speedup| Volatile GPU-Util |
 |:-------|:-----:|:-------:|:-----:|:-------:|:-------:|:-------:|
-| YOLOv3-SPP | 1 | 54.1 | 18.48 |  | 87% |
+| YOLOv3-SPP | 1 | 54.1 | 18.48 | 1x | 1x | 87% |
 |  | 2 | 93.9 | 21.30 |  |  | 93% |
 |  | 4 | 172.6 | 23.17 |  |  | 98% |
 |  | 8 | 322.8 | 24.78 |  |  | 100% |
@@ -75,7 +75,7 @@ nvidia-smi -lgc gpuFrq,gpuFrq   # 将GPU进行锁频
 
 | model | Batchsize | Latency (ms) | Throughput  | Latency Speedup |Throughput speedup| Volatile GPU-Util |
 |:-------|:-----:|:-------:|:-----:|:-------:|:-------:|:-------:|
-| FastPose | 1 | 23.9 | 41.84 |  |  | 30% |
+| FastPose | 1 | 23.9 | 41.84 | 1x | 1x | 30% |
 |  | 2 | 24.6 | 81.30 |  |  | 39% |
 |  | 4 | 27.9 | 143.37 |  |  | 64% |
 |  | 8 | 33.2 | 240.96 |  |  | 99% |
@@ -101,7 +101,7 @@ nvidia-smi -lgc gpuFrq,gpuFrq   # 将GPU进行锁频
 
 | model | Batchsize | Latency (ms) | Throughput  | Latency Speedup |Throughput speedup| Volatile GPU-Util |
 |:-------|:-----:|:-------:|:-----:|:-------:|:-------:|:-------:|
-| AlphaPose | 1 | 78.0 | 12.82 |  |  | 87% |
+| AlphaPose | 1 | 78.0 | 12.82 | 1x | 1x | 87% |
 |  | 2 | 118.5 | 16.87 |  |  | 94% |
 |  | 4 | 200.5 | 19.95 |  |  | 97% |
 |  | 8 | 356 | 22.47 |  |  | 100% |
