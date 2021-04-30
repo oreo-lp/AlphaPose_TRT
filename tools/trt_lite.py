@@ -18,7 +18,6 @@ from functools import reduce
 import tensorrt
 import pycuda.driver as cuda
 import numpy as np
-import pycuda.autoinit
 import tensorrt as trt
 import torch
 import time
@@ -36,15 +35,6 @@ class HostDeviceMem(object):
 
     def __repr__(self):
         return self.__str__()
-
-
-class PyTorchTensorHolder(pycuda.driver.PointerHolderBase):
-    def __init__(self, tensor):
-        super(PyTorchTensorHolder, self).__init__()
-        self.tensor = tensor
-
-    def get_pointer(self):
-        return self.tensor.data_ptr()
 
 
 class TrtTiny(object):
@@ -242,4 +232,3 @@ class TrtLite:
                   self.engine.get_binding_shape(i),
                   -1 if -1 in self.engine.get_binding_shape(i) else reduce(
                       lambda x, y: x * y, self.engine.get_binding_shape(i)) * self.engine.get_binding_dtype(i).itemsize)
-
