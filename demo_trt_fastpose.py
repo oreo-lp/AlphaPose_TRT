@@ -2,11 +2,7 @@
     计算fastpose加速比的方法
 """
 import torch
-import torchvision
-from torchsummary import summary
 import time
-import pycuda.driver as cuda
-import pycuda.autoinit
 from alphapose.models import builder
 from easydict import EasyDict as edict
 import yaml
@@ -30,15 +26,6 @@ def get_parser():
                         help='the path of txt engine')
     args = parser.parse_args()
     return args
-
-
-class PyTorchTensorHolder(pycuda.driver.PointerHolderBase):
-    def __init__(self, tensor):
-        super(PyTorchTensorHolder, self).__init__()
-        self.tensor = tensor
-
-    def get_pointer(self):
-        return self.tensor.data_ptr()
 
 
 def update_config(config_file):
