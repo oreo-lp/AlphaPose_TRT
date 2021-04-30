@@ -32,7 +32,7 @@ AlphaPose在数据预处理部分使用YOLOv3-SPP模型检测出一幅图像中�
 
 **所有的测试过程都对GPU以及Memory进行了锁频**
 
-GPU Frequency = **1509HZ**, Memory Frequency = **5001HZ**，具体操作如下：
+GPU Frequency = **1509MHz**, Memory Frequency = **5001MHz**，具体操作如下：
 
 ```shell 
 nvidia-smi -pm 1
